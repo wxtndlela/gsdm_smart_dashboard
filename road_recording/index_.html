@@ -1,0 +1,125 @@
+<html>
+  <head>
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase.js"></script>
+  </head>
+  <body>
+    <a-scene vr-mode-ui="false" device-orientation-permission-ui="">
+      <a-assets>
+        <video id="my-video" loop crossorigin="*"></video>
+      </a-assets>
+
+      <a-videosphere src="#my-video"></a-videosphere>
+
+      <div id="controls">
+        <button id="play-pause">Play</button>
+        <!-- <button id="mute-unmute">Mute</button> -->
+        <!-- <button id="load-video">Load Segment Video</button> -->
+      </div>
+      <div id="myform">
+        <iframe
+          class="ifr"
+          id="form"
+          src="https://novosense.africa/gsdm"
+          frameborder="0"
+          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+      </div>
+    </a-scene>
+
+    <style>
+      #controls {
+        position: absolute;
+        bottom: 20px;
+        left: 20px;
+        z-index: 1;
+        background-color: rgba(255, 255, 255, 0.5);
+        padding: 10px;
+        border-radius: 5px;
+      }
+
+      .ifr {
+        height: 90vh;
+        width: 20vw;
+      }
+
+      button {
+        margin-right: 10px;
+      }
+      #myform {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        z-index: 1;
+        background-color: rgba(255, 255, 255, 0.5);
+        padding: 10px;
+        border-radius: 5px;
+      }
+    </style>
+
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyAi9P0och79wBI2_9szbr0kusTW2f2sbic",
+        authDomain: "change-detection-5f3ba.firebaseapp.com",
+        databaseURL:
+          "https://change-detection-5f3ba-default-rtdb.firebaseio.com",
+        projectId: "change-detection-5f3ba",
+        storageBucket: "change-detection-5f3ba.appspot.com",
+        messagingSenderId: "916986683525",
+        appId: "1:916986683525:web:da77b8a3033c10bbde49ec",
+        measurementId: "G-J7H86RXPW5",
+      };
+
+      // Initialize Firebase
+      const app = firebase.initializeApp(firebaseConfig);
+      //const analytics = getAnalytics(app);
+
+      const db = firebase.firestore(app);
+      const video = document.querySelector("#my-video");
+      const playPauseButton = document.querySelector("#play-pause");
+      // const muteUnmuteButton = document.querySelector("#mute-unmute");
+      // const loadVideoButton = document.querySelector("#load-video");
+
+      // set the src attribute to the value of your url
+      const videoSrc = "";
+
+      playPauseButton.addEventListener("click", () => {
+        if (video.paused) {
+          video.src = "rtmp://192.168.8.152/live/001";
+          video.play();
+          playPauseButton.textContent = "Pause";
+        } else {
+          video.pause();
+          playPauseButton.textContent = "Play";
+        }
+      });
+
+      // loadVideoButton.addEventListener("click", () => {
+      //   //GET VIDEO
+      //   db.collection("gsdm-road-inspection-play")
+      //     .doc("t0syUpHEb6WxqBepFTcw")
+      //     .get()
+      //     .then((doc) => {
+      //       let URL = doc.data().url;
+      //       console.log(URL);
+      //       video.src = URL;
+      //       alert("Segment Video Loaded!!!");
+      //     });
+      // });
+
+      // muteUnmuteButton.addEventListener("click", () => {
+      //   if (video.muted) {
+      //     video.muted = false;
+      //     muteUnmuteButton.textContent = "Mute";
+      //   } else {
+      //     video.muted = true;
+      //     muteUnmuteButton.textContent = "Unmute";
+      //   }
+      // });
+    </script>
+  </body>
+</html>

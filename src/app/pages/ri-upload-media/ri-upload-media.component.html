@@ -1,0 +1,156 @@
+<div class="page-header">
+  <h3 class="page-title"></h3>
+  <nav aria-label="breadcrumb">
+    <ul class="breadcrumb">
+      <li class="breadcrumb-item active" aria-current="page">
+        <span></span>Upload Images and 3D Videos
+        <i
+          class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"
+        ></i>
+      </li>
+    </ul>
+  </nav>
+</div>
+
+<div
+  class="container-fluid page-body-wrapper"
+  style="min-height: 100%; padding-top: 0%"
+>
+  <div class="main-panel-only w-100">
+    <div class="content-wrapper h-100">
+      <div contentAnimate class="h-100">
+        <div class="row">
+          <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+              <div class="card-body">
+                <h4 class="card-title">Title</h4>
+
+                <form class="forms-sample" [formGroup]="contentForm">
+                  <div class="form-group">
+                    <label for="exampleInputUsername1">Content Name</label>
+                    <input
+                      formControlName="name"
+                      type="text"
+                      class="form-control"
+                      id="exampleInputUsername1"
+                      placeholder="Name"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="ctype">Content Type ( Image or Video )</label>
+
+                    <ion-select
+                      class="form-control"
+                      [(ngModel)]="ctype"
+                      formControlName="ctype"
+                      value="select"
+                      okText="Okay"
+                      cancelText="Dismiss"
+                      id="ctype"
+                    >
+                      <ion-select-option value="img">Image</ion-select-option>
+                      <ion-select-option value="vid">Video</ion-select-option>
+                    </ion-select>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="exampleInputPassword1"
+                      >Actual Content to Upload</label
+                    >
+                    <input
+                      (change)="select_file($event)"
+                      accept="image/png, image/gif, image/jpeg, video/mp4"
+                      type="file"
+                      class="form-control"
+                      id="exampleInputPassword1"
+                      placeholder="photo"
+                    />
+                  </div>
+
+                  <button
+                    *ngIf="!data"
+                    type="submit"
+                    class="btn btn-gradient-info mr-2"
+                    (click)="submit()"
+                  >
+                    Submit
+                  </button>
+                  <button
+                    *ngIf="data"
+                    type="submit"
+                    class="btn btn-gradient-info mr-2"
+                    (click)="update()"
+                  >
+                    Update
+                  </button>
+
+                  <button class="btn btn-light" (click)="dismiss()">
+                    Cancel
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- partial -->
+  </div>
+  <!-- main-panel ends -->
+</div>
+<!-- page-body-wrapper ends -->
+
+<!-- filters -->
+<div class="row grid-margin">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <form class="form-sample">
+          <p class="card-description">Narrow down your search by filters</p>
+
+          <div class="row">
+            <div class="col-md-3">
+              <div class="form-group row">
+                <div class="col-sm-12">
+                  <select class="form-control">
+                    <option>Province</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <div class="form-group row">
+                <div class="col-sm-12">
+                  <select class="form-control">
+                    <option>City</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <div class="form-group row">
+                <div class="col-sm-12">
+                  <select class="form-control">
+                    <option>Orientation</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <div class="form-group row">
+                <div class="col-sm-12">
+                  <select class="form-control">
+                    <option>Impressions</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

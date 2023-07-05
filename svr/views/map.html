@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>GSDM Map</title>
+    <link rel="stylesheet" href="./leaflet.css" />
+    <style>
+      #map {
+        width: 100%;
+        height: 100vh;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <!-- <button id="saveTilesButton">Download Map</button>
+    <button id="uploadTilesButton">Upload Map</button> -->
+
+    <script src="./leaflet.js"></script>
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyDB26XW1F6r__fzdWvAfAtRlC-S2h46SJc",
+        authDomain: "gsdm-smart-dashboard.firebaseapp.com",
+        projectId: "gsdm-smart-dashboard",
+        storageBucket: "gsdm-smart-dashboard.appspot.com",
+        messagingSenderId: "745288407116",
+        appId: "1:745288407116:web:a0df2e79ca3056af5efce9",
+        measurementId: "G-3V19P6VDNC",
+      };
+
+      const params = new URLSearchParams(window.location.search);
+
+      // Initialize Firebase
+      const app = firebase.initializeApp(firebaseConfig);
+      //const analytics = getAnalytics(app);
+
+      const db = firebase.firestore(app);
+
+      var map = L.map("map").setView([-26.654962, 28.597382], 10);
+
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution:
+          'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+        maxZoom: 18,
+      }).addTo(map);
+
+      //Add polylines from DB
+      //Initialize
+
+      const _data = [];
+      const _data_fin = [];
+      let isInternetAvailable = false;
+
+      initMap();
+
+      // Add the tile layer to the map
+
+      document
+        .getElementById("saveTilesButton")
+        .addEventListener("click", function () {
+          window.location.href = "/download-specific";
+        });
+
+      document
+        .getElementById("uploadTilesButton")
+        .addEventListener("click", function () {
+          const tileLayerUrl = "tiles/{z}_{x}_{y}.png";
+          // Get the current tile layer
+          map.removeLayer(L.tileLayer);
+
+          // Create a new tile layer with the same URL
+          map.setView([-26.654962, 28.597382], 15);
+
+          const newTileLayer = L.tileLayer(tileLayerUrl, {
+            attribution:
+              'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+            maxZoom: 18,
+          });
+
+          // Add the new tile layer to the map
+
+          newTileLayer.addTo(map);
+        });
+
+      function initMapOffline() {
+        const tileLayerUrl = "tiles/{z}_{x}_{y}.png";
+        // Get the current tile layer
+        map.removeLayer(L.tileLayer);
+
+        // Create a new tile layer with the same URL
+        map.setView([-26.654962, 28.597382], 15);
+
+        const newTileLayer = L.tileLayer(tileLayerUrl, {
+          attribution:
+            'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+          maxZoom: 18,
+        });
+
+        // Add the new tile layer to the map
+
+        newTileLayer.addTo(map);
+      }
+
+      function rotateLatLng(value) {
+        var latlngs = inputArray.map(function (item) {
+          var parts = item.split(",");
+
+          var lat = parseFloat(parts[1]);
+
+          var lng = parseFloat(parts[0]);
+
+          return;
+          [lat, lng];
+        });
+
+        //console.log(latlngs);
+      }
+
+      function initMap() {
+        try {
+          db.collection("gsdm-road-inspection-segments")
+            .get()
+            .then((querySnapshot) => {
+              querySnapshot.forEach((doc) => {
+                _data.push(doc.data().geometry);
+                _data_fin.push(doc.data());
+              });
+              //console.log("Data:", _data);
+              let len = _data.length;
+              let cnt = 0;
+              while (cnt < len) {
+                var latlngs = _data[cnt].map(function (item) {
+                  var parts = item.split(",");
+
+                  var lat = parseFloat(parts[1]);
+
+                  var lng = parseFloat(parts[0]);
+                  // console.log("LAT:", lat);
+                  // console.log("LNG:", lng);
+
+                  return [lat, lng];
+                });
+
+                addPoly(map, latlngs, _data_fin[cnt]);
+
+                cnt += 1;
+              }
+
+              initMapOffline();
+            })
+            .catch((error) => {
+              console.log("Error getting documents: ", error);
+            });
+
+          setTimeout(function () {
+            //console.log("HERE:", _data_fin.length);
+            checkInternet();
+            if (isInternetAvailable == false) {
+              //console.log("--non-internet--");
+              const retrievedArrayString = localStorage.getItem("DATA");
+              const retrievedArray = JSON.parse(retrievedArrayString);
+              //console.log(retrievedArrayString)
+              let _len = retrievedArray.length;
+              let cnt = 0;
+              while (cnt < _len) {
+                _data.push(retrievedArray[cnt].geometry);
+                _data_fin.push(retrievedArray[cnt]);
+                cnt += 1;
+              }
+
+              len = _data.length;
+              cnt = 0;
+              while (cnt < len) {
+                var latlngs = _data[cnt].map(function (item) {
+                  var parts = item.split(",");
+
+                  var lat = parseFloat(parts[1]);
+
+                  var lng = parseFloat(parts[0]);
+                  // console.log("LAT:", lat);
+                  // console.log("LNG:", lng);
+
+                  return [lat, lng];
+                });
+
+                addPoly(map, latlngs, _data_fin[cnt]);
+
+                cnt += 1;
+              }
+
+              initMapOffline();
+
+              //console.log(_data_fin);
+            } else {
+              //console.log("--online--");
+              const arrayString = JSON.stringify(_data_fin);
+              localStorage.setItem("DATA", arrayString);
+            }
+          }, 5000);
+        } catch (error) {
+          // Code to handle the exception
+          console.log("An exception occurred:", error.message);
+        }
+      }
+
+      //offlineStorage()
+
+      // Assuming you have an array
+      //const myArray = [1, 2, 3, 4, 5];
+
+      // Convert the array to a string using JSON.stringify
+      //const arrayString = JSON.stringify(myArray);
+
+      // Save the string representation in local storage
+      //localStorage.setItem("myArray", arrayString);
+
+      function checkInternet() {
+        console.log("Checking internet...");
+
+        // Try to fetch a resource from the internet
+        fetch("https://www.google.com", {
+          mode: 'no-cors', // 'no-cors' mode to avoid CORS issues
+          // The server may not respond, so set a timeout
+          }).then(() => {
+            console.log("--[MAP] Online--");
+            isInternetAvailable = true;
+          }).catch(() => {
+            console.log("--[MAP] No Internet--");
+            isInternetAvailable = false;
+          });
+      }
+
+
+      function addPoly(_map, _array, _data) {
+        // Add Poly
+        var polyline = L.polyline(_array, { color: "purple", weight: 10 });
+        polyline.addTo(_map);
+
+        polyline.on("mouseover", function () {
+          this.setStyle({
+            color: "pink", // or whatever style you wish to use
+          });
+        });
+
+        polyline.on("mouseout", function () {
+          this.setStyle({
+            color: "purple", // or whatever style you wish to use
+          });
+        });
+
+        polyline.bindPopup(
+          "Municipality: " +
+            _data.municipality +
+            "<br>Road ID: " +
+            _data.road_id +
+            "<br>Street Name: " +
+            _data.street_name +
+            "<br>Surface Type: " +
+            _data.surfacetype
+        );
+
+        function getCoordinates(polyline) {
+          var latLngs = polyline.getLatLngs();
+          var coordinates = latLngs.map(function (latLng) {
+            return latLng.lng + " / " + latLng.lat;
+          });
+          return coordinates.join(", ");
+        }
+
+        // Trigger popup open on mouseover
+        polyline.on("mouseover", function (e) {
+          this.openPopup();
+        });
+
+        // Close popup on mouseout
+        // polyline.on("mouseout", function (e) {
+        //   this.closePopup();
+        // });
+
+        // Open link on click
+        polyline.on("click", function () {
+          var message = {
+            type: "clickEvent",
+            data: {
+              roadid: _data.road_id,
+            },
+          };
+
+          // Send the message to the parent page
+          console.log("Segment clicked!:", _data.road_id);
+
+          window.parent.postMessage(message, "*");
+        });
+      }
+    </script>
+  </body>
+</html>

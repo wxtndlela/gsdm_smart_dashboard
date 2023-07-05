@@ -1,0 +1,214 @@
+<ion-content class="container-scroller">
+  <div class="container-fluid page-body-wrapper" style="min-height: 100%;padding-top: 0%;">
+    <div class="main-panel-only w-100">
+      <div class="content-wrapper h-100">
+        <div contentAnimate class="h-100">
+          <div class="page-header">
+            <h3 class="page-title">
+              {{title}}
+            </h3>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <br>
+                  <div>
+                    <div>
+                      <div class="d-flex">
+                        <div class="d-flex align-items-center mr-4 text-muted font-weight-light">
+                          <i class="mdi mdi mdi-map-marker icon-sm mr-2"></i>
+                          <span>{{data.name}}</span>
+                        </div>
+                      </div>
+
+
+
+                      <div class="row mt-3">
+                        <div class="col-md-6 pr-1">
+                          <img style="height: 30vh;object-fit: cover;" src="{{data.photo_url}}"
+                            class="mb-2 mw-100 w-100 rounded" alt="image">
+                          <br>
+
+                          <br>
+                        </div>
+
+                        <div class="col-md-6 pl-1">
+                          <div class="table-responsive" style="max-height: max-content;">
+                            <table class="table">
+                              <thead>
+                                <tr>
+                                  <td>
+                                    Dimension
+                                  </td>
+                                  <td>
+                                    {{data.screen_width}} X {{data.screen_height}}
+                                  </td>
+                                </tr>
+                              </thead>
+
+                              <tbody>
+
+
+                                <tr>
+                                  <td>
+                                    Orientation
+                                  </td>
+                                  <td>
+                                    {{data.orientation}}
+                                  </td>
+                                </tr>
+
+                                <tr>
+                                  <td>
+                                    LSM
+                                  </td>
+                                  <td>
+                                    6 X 9
+                                  </td>
+                                </tr>
+
+
+                                <tr>
+                                  <td>
+                                    Rate
+                                  </td>
+                                  <td>
+                                    R{{data.rate}} (pm)
+                                  </td>
+                                </tr>
+
+                                <tr>
+                                  <td></td>
+                                  <td>
+                                  </td>
+                                </tr>
+
+                              </tbody>
+
+                            </table>
+                          </div>
+
+                        </div>
+
+                        <br>
+                      </div>
+                      <div class="row">
+                        <div class="col-4">
+                          <div style="text-align: center;" class="align-items-center mr-4 text-muted font-weight-light">
+                            <i class="mdi mdi mdi-motorbike icon-sm mr-2"></i>
+                          </div>
+                        </div>
+                        <div class="col-4">
+                          <div style="text-align: center;" class="align-items-center mr-4 text-muted font-weight-light">
+                            <i class="mdi mdi mdi-car icon-sm mr-2"></i>
+                          </div>
+                        </div>
+                        <div class="col-4">
+                          <div style="text-align: center;" class="align-items-center mr-4 text-muted font-weight-light">
+                            <i class="mdi mdi mdi-truck icon-sm mr-2"></i>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-4">
+                          <div style="text-align: center;" class="align-items-center mr-4 text-muted font-weight-light">
+                            <span>12345</span>
+                          </div>
+                        </div>
+                        <div class="col-4">
+                          <div style="text-align: center;" class="align-items-center mr-4 text-muted font-weight-light">
+                            <span>12345</span>
+                          </div>
+                        </div>
+                        <div class="col-4">
+                          <div style="text-align: center;" class="align-items-center mr-4 text-muted font-weight-light">
+                            <span>12345</span>
+                          </div>
+                        </div>
+                      </div>
+                      <br>
+
+                      <div class="row">
+                        <div class="col-12">
+                          <div class="card" id="map_canvas_booking" style="height: 30vh;">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+
+
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <!-- <h4 class="card-title">Location:</h4>
+                  <p class="card-description">
+                    coordinates :{{data.latitude}}, {{data.longitude}}
+                    <br />
+                    Address : {{data.province}}, {{data.city}}, {{data.surburb}}, {{data.postalCode}}
+                  </p> -->
+
+                  <form class="forms-sample" [formGroup]="bookingForm">
+
+                    <div class="row">
+                      <div class="col-6">
+                        <div class="form-group text-white">
+                          <label for="exampleInputEmail1">Start date</label>
+                          <input (click)="present_date_picker($event, 'start_date')" formControlName="start_date"
+                            type="text" class="form-control form-control-lg">
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <div class="form-group text-white">
+                          <label for="exampleInputPassword1">End date</label>
+                          <input (click)="present_date_picker($event, 'end_date')" formControlName="end_date"
+                            type="text" class="form-control form-control-lg">
+                        </div>
+                      </div>
+                    </div>
+
+                    <h4 class="card-title">Current Balance:</h4>
+                    <p class="card-description">
+                      Balance : R{{Balance}}
+                      
+                      <br />
+                    </p>
+
+                    <h4 class="card-title">My booking:</h4>
+                    <p class="card-description">
+                      Total : R{{total}}
+                      <br />
+                      Duration : {{duration}} (days)
+                      <br />
+                      Reach : {{reach}}
+                      <br />
+                    </p>
+
+                    <h4 class="card-title">My Content:</h4>
+                    <p class="card-description">
+
+                      <br />
+                    </p>
+
+                    <button type="submit" class="btn btn-gradient-info mr-2" (click)="submit()">Submit</button>
+
+                    <button class="btn btn-light" (click)="dismiss()">Cancel</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- partial -->
+    </div>
+    <!-- main-panel ends -->
+  </div>
+  <!-- page-body-wrapper ends -->
+</ion-content>

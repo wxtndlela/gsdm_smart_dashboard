@@ -1,0 +1,22 @@
+
+ion-label, ion-item, ion-list{
+    --ion-item-background: #292f37 !important;
+    color: aliceblue;
+    font-size: 12px;
+}
+.green{
+    color: green;
+    font-weight: bold;
+}
+.red{
+    color: red;
+    font-weight: bold;
+}
+
+.title{
+    cursor: pointer;
+}
+.title:active{
+    color: greenyellow;
+    font-weight: bold;
+}

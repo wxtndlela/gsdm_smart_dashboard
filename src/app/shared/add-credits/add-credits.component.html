@@ -1,0 +1,61 @@
+<ion-content class="container-scroller">
+    <div class="container-fluid page-body-wrapper" style="min-height: 100%;padding-top: 0%;">
+        <div class="main-panel-only w-100">
+            <div class="content-wrapper h-100">
+                <div contentAnimate class="h-100">
+                    <div class="page-header">
+                        <h3 class="page-title">
+                            Add credits
+                        </h3>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-12 grid-margin stretch-card">
+                            <div class="card">
+                                <div class="card-body">
+                                    <!-- <h4 class="card-title">Location:</h4>
+                    <p class="card-description">
+                      coordinates :{{data.latitude}}, {{data.longitude}}
+                      <br />
+                      Address : {{data.province}}, {{data.city}}, {{data.surburb}}, {{data.postalCode}}
+                    </p> -->
+
+                                    <form class="forms-sample" [formGroup]="creditsForm">
+
+
+                                        <h4 class="card-title">Current Balance:</h4>
+                                        <p class="card-description">
+                                            Balance : R{{Balance}}
+
+                                            <br />
+                                        </p>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="form-group text-white">
+                                                    <label for="exampleInputEmail1">Amount</label>
+                                                    <input 
+                                                        formControlName="amt" type="number"
+                                                        class="form-control form-control-lg">
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <button type="submit" class="btn btn-gradient-info mr-2"
+                                            (click)="submit()">Submit</button>
+
+                                        <button class="btn btn-light" (click)="dismiss()">Cancel</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- partial -->
+        </div>
+        <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+</ion-content>

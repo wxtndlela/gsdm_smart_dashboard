@@ -1,0 +1,57 @@
+<ion-content class="container-scroller">
+    <div class="container-fluid page-body-wrapper" style="min-height: 100%;padding-top: 0%;">
+      <div class="main-panel-only w-100">
+        <div class="content-wrapper h-100">
+          <div contentAnimate class="h-100">
+
+            <div class="row">
+
+              <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">{{title}}</h4>
+                    
+                    <form class="forms-sample" [formGroup]="contentForm">
+                      <div class="form-group">
+                        <label for="exampleInputUsername1">Call Name</label>
+                        <input formControlName="name" type="text" class="form-control" id="exampleInputUsername1"
+                          placeholder="Name">
+                      </div>
+                      <div class="form-group">
+          
+                            <label for="ctype">Call Type ( Buy or Play )</label>
+        
+                                <ion-select class="form-control" [(ngModel)]="ctype" formControlName="ctype" value="select" okText="Okay" cancelText="Dismiss" id="ctype">
+                                  <ion-select-option value="Buy">Buy</ion-select-option>
+                                  <ion-select-option value="Play">Play</ion-select-option>
+                                
+                                </ion-select>
+
+                       
+                      </div>
+                      <div class="form-group">
+                        <label for="curl">Call URL</label>
+                        <input formControlName="curl" type="text" class="form-control" id="curl"
+                          placeholder="Call URL">
+                      </div>
+  
+
+                      <button *ngIf="!data" type="submit" class="btn btn-gradient-info mr-2"
+                        (click)="submit()">Submit</button>
+                      <button *ngIf="data" type="submit" class="btn btn-gradient-info mr-2"
+                        (click)="update()">Update</button>
+  
+                      <button class="btn btn-light" (click)="dismiss()">Cancel</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- partial -->
+      </div>
+      <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </ion-content>

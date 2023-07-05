@@ -1,0 +1,88 @@
+
+<!-- cards -->
+<div class="row">
+
+    <div class="col-md-3 stretch-card grid-margin">
+        <div (click)="add_calltoaction()" class="card bg-gradient-dark card-img-holder text-white">
+            <div class="card-body ">
+                <i class="mdi mdi-bell-check-outline
+                mdi-24px float-left"></i>
+            </div>
+            <div class="card-body ">
+                <h6 class="card-text">Add Campaign Call to Action
+                </h6>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- table -->
+<div class="row grid-margin">
+
+    <!-- table -->
+    <div class="col-md-6 stretch-card grid-margin">
+
+        <div class="card">
+
+            <div class="card">
+                <div class="card-body">
+
+                    <div style="height: 50vh;overflow-y:scroll;overflow-x: hidden;">
+                        <ion-list>
+                            <ion-item *ngFor="let item of Cont">
+                                <ion-grid>
+                                    <ion-row>
+                                        <ion-col (click)="view_call(item.call_type, item.call_url)" class="title" size="4">
+                                            {{item.name}}
+                                        </ion-col>
+                                        <ion-col size="4">
+                                            <span *ngIf="item.call_type=='Buy'">Buy call is 
+                                                <span>
+                                                    <span class="green" *ngIf="item.enabled">Enabled</span>
+                                                    <span class="red" *ngIf="!item.enabled">Disabled</span>
+                                                </span>
+                                            </span>
+                                            <span *ngIf="item.call_type=='Play'">Play call is 
+                                                <span>
+                                                    <span class="green" *ngIf="item.enabled">Enabled</span>
+                                                    <span class="red" *ngIf="!item.enabled">Disabled</span>
+                                                </span>
+                                            </span>
+                                        </ion-col>
+           
+                                        <ion-col size="4">
+                                            <ion-button (click)="presentConfirm(item)" color="danger" fill="solid">Remove</ion-button>
+                                        </ion-col>
+                         
+                                    </ion-row>
+                                </ion-grid>
+     
+                            </ion-item>
+                        </ion-list>
+      
+
+                    </div>
+
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <!-- map -->
+    <div class="col-md-6 stretch-card grid-margin">
+        <div class="card">
+            <div class="card-body">
+                <div>
+                    <iframe width="100%" height="300" [src]="call_url"></iframe>
+                </div>
+         
+                </div>
+            </div>
+
+    </div>
+</div>

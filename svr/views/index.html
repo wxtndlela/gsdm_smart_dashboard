@@ -1,0 +1,280 @@
+<html>
+  <head>
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <style>
+      .button-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      button {
+        margin: 5px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <a-scene vr-mode-ui="false" device-orientation-permission-ui="">
+      <a-assets>
+        <video id="my-video" loop crossorigin="*"></video>
+      </a-assets>
+
+      <a-videosphere src="#my-video"></a-videosphere>
+
+      <div id="controls" class="button-container">
+        <button id="play-pause">Play</button>
+        <!-- <button id="mute-unmute">Mute</button> -->
+        <button id="load-video">Load Segment Video</button>
+        <button id="loading-video">Loading Segment Video ...</button>
+        <button id="video-speed-half">Speed 0.5X</button>
+        <button id="video-speed-normal">Speed 1X</button>
+        <button id="video-speed-twice">Speed 2X</button>
+        <button id="video-speed-backward">
+          <i class="fa fa-backward" aria-hidden="true"></i>&nbsp;5sec
+        </button>
+        <button id="video-speed-forward">
+          5sec&nbsp;<i class="fa fa-forward" aria-hidden="true"></i>
+        </button>
+      </div>
+      <!-- <div id="myform">
+        <iframe
+          class="ifr"
+          id="form"
+          src="https://novosense.africa/gsdm"
+          frameborder="0"
+          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+      </div> -->
+    </a-scene>
+
+    <style>
+      #controls {
+        position: absolute;
+        bottom: 20px;
+        left: 20px;
+        z-index: 1;
+        background-color: rgba(255, 255, 255, 0.5);
+        padding: 10px;
+        border-radius: 5px;
+      }
+
+      .ifr {
+        height: 90vh;
+        width: 20vw;
+      }
+
+      button {
+        margin-right: 10px;
+      }
+
+      #myform {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        z-index: 1;
+        background-color: rgba(255, 255, 255, 0.5);
+        padding: 10px;
+        border-radius: 5px;
+      }
+    </style>
+
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyDB26XW1F6r__fzdWvAfAtRlC-S2h46SJc",
+        authDomain: "gsdm-smart-dashboard.firebaseapp.com",
+        projectId: "gsdm-smart-dashboard",
+        storageBucket: "gsdm-smart-dashboard.appspot.com",
+        messagingSenderId: "745288407116",
+        appId: "1:745288407116:web:a0df2e79ca3056af5efce9",
+        measurementId: "G-3V19P6VDNC",
+      };
+
+      setInterval(function () {
+        //console.log("HERE:", _data_fin.length);
+        checkInternet();
+      }, 2000);
+
+      const params = new URLSearchParams(window.location.search);
+
+      // Initialize Firebase
+      const app = firebase.initializeApp(firebaseConfig);
+      //const analytics = getAnalytics(app);
+
+      const db = firebase.firestore(app);
+      const video = document.querySelector("#my-video");
+      const playPauseButton = document.querySelector("#play-pause");
+      playPauseButton.style.display = "none";
+      // const muteUnmuteButton = document.querySelector("#mute-unmute");
+      const loadVideoButton = document.querySelector("#load-video");
+      const loadingVideoButton = document.querySelector("#loading-video");
+      const VideoSpeedHalfButton = document.querySelector("#video-speed-half");
+      const VideoSpeedNormalButton = document.querySelector(
+        "#video-speed-normal"
+      );
+      const VideoSpeedTwiceButton =
+        document.querySelector("#video-speed-twice");
+      const VideoSpeedForwardlButton = document.querySelector(
+        "#video-speed-forward"
+      );
+      const VideoSpeedBackwardButton = document.querySelector(
+        "#video-speed-backward"
+      );
+      loadingVideoButton.style.display = "none";
+      VideoSpeedHalfButton.style.display = "none";
+      VideoSpeedNormalButton.style.display = "none";
+      VideoSpeedTwiceButton.style.display = "none";
+      VideoSpeedForwardlButton.style.display = "none";
+      VideoSpeedBackwardButton.style.display = "none";
+
+      VideoSpeedHalfButton.style.backgroundColor = "grey";
+      VideoSpeedNormalButton.style.backgroundColor = "yellow";
+      VideoSpeedTwiceButton.style.backgroundColor = "grey";
+
+      // set the src attribute to the value of your url
+      const videoSrc = "";
+      video.src = videoSrc;
+
+      //video.playbackRate = 0.5; // Change the playback speed to 2x
+
+      playPauseButton.addEventListener("click", () => {
+        if (video.paused) {
+          video.play();
+          playPauseButton.textContent = "Pause";
+
+          const totalSeconds = video.duration;
+          console.log("Total seconds:", totalSeconds);
+
+          // // Update the current position every second using setInterval()
+          // setInterval(function () {
+          //   const currentPosition = video.currentTime;
+          //   console.log("Current position:", currentPosition);
+          // }, 1000);
+        } else {
+          video.pause();
+          playPauseButton.textContent = "Play";
+        }
+      });
+
+      // Set up an event listener for the timeupdate event
+      video.addEventListener("timeupdate", function () {
+        const currentPosition = video.currentTime;
+        console.log("Current position:", currentPosition);
+      });
+
+      loadVideoButton.addEventListener("click", () => {
+        const segmentmedia = params.get("segmentmedia");
+        const offline = params.get("offline");
+        try {
+          //GET VIDEO
+          loadingVideoButton.style.display = "block";
+          loadVideoButton.style.display = "none";
+          if (isInternetAvailable == true) {
+            //Online
+            db.collection("segment-media")
+              .doc(segmentmedia)
+              .get()
+              .then((doc) => {
+                let URL = doc.data().media_url;
+                console.log(URL);
+                video.src = URL;
+                video.muted = true;
+                alert("Segment Video Loaded!!!");
+                console.log("[INFO] Online Loaded URL: ", URL);
+                playPauseButton.style.display = "block";
+                VideoSpeedHalfButton.style.display = "block";
+                VideoSpeedNormalButton.style.display = "block";
+                VideoSpeedTwiceButton.style.display = "block";
+                VideoSpeedForwardlButton.style.display = "block";
+                VideoSpeedBackwardButton.style.display = "block";
+                loadingVideoButton.style.display = "none";
+                //loadVideoButton.style.display = "block";
+              });
+          } else {
+            //Offline
+            console.log("[INFO] Offline Loaded URL: ", segmentmedia);
+            if (segmentmedia.includes("https://")) {
+              alert(
+                "This segment video is not available in offline mode.Try to re-download when online!"
+              );
+              loadingVideoButton.style.display = "none";
+              loadVideoButton.style.display = "block";
+            } else {
+              video.src = segmentmedia;
+              video.muted = true;
+              alert("Segment Video Loaded!!!");
+
+              playPauseButton.style.display = "block";
+              VideoSpeedHalfButton.style.display = "block";
+              VideoSpeedNormalButton.style.display = "block";
+              VideoSpeedTwiceButton.style.display = "block";
+              VideoSpeedForwardlButton.style.display = "block";
+              VideoSpeedBackwardButton.style.display = "block";
+              loadingVideoButton.style.display = "none";
+            }
+
+            //loadVideoButton.style.display = "block";
+          }
+        } catch (error) {
+          // code to handle the exception
+          loadingVideoButton.style.display = "none";
+          loadVideoButton.style.display = "block";
+          console.log("An error occurred: " + error.message);
+        }
+      });
+
+      VideoSpeedBackwardButton.addEventListener("click", () => {
+        video.currentTime -= 5;
+      });
+      VideoSpeedForwardlButton.addEventListener("click", () => {
+        video.currentTime += 5;
+      });
+
+      VideoSpeedHalfButton.addEventListener("click", () => {
+        video.playbackRate = 0.5;
+        VideoSpeedHalfButton.style.backgroundColor = "yellow";
+        VideoSpeedNormalButton.style.backgroundColor = "grey";
+        VideoSpeedTwiceButton.style.backgroundColor = "grey";
+      });
+      VideoSpeedNormalButton.addEventListener("click", () => {
+        video.playbackRate = 1.0;
+        VideoSpeedHalfButton.style.backgroundColor = "grey";
+        VideoSpeedNormalButton.style.backgroundColor = "yellow";
+        VideoSpeedTwiceButton.style.backgroundColor = "grey";
+      });
+      VideoSpeedTwiceButton.addEventListener("click", () => {
+        video.playbackRate = 2.0;
+        VideoSpeedHalfButton.style.backgroundColor = "grey";
+        VideoSpeedNormalButton.style.backgroundColor = "grey";
+        VideoSpeedTwiceButton.style.backgroundColor = "yellow";
+      });
+
+      function checkInternet() {
+        console.log("Checking internet...");
+
+        // Try to fetch a resource from the internet
+        fetch("https://www.google.com", {
+            mode: 'no-cors', // 'no-cors' mode to avoid CORS issues
+            // The server may not respond, so set a timeout
+            }).then(() => {
+            console.log("--[PLAYER] Online--");
+            isInternetAvailable = true;
+            }).catch(() => {
+            console.log("--[PLAYER] No Internet--");
+            isInternetAvailable = false;
+            });
+    }
+
+      
+    </script>
+  </body>
+</html>

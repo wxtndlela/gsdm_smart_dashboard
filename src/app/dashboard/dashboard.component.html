@@ -1,0 +1,320 @@
+<!-- <div class="row" id="proBanner">
+  <div class="col-12">
+    <span class="align-items-center purchase-popup">
+      <p>
+        This platform is a Smart Dashboard for GERT SIBANDE DISTRICT
+        MUNICIPALITY
+      </p>
+     
+    </span>
+  </div>
+</div> -->
+
+<!-- <div class="page-header">
+  <h3 class="page-title">
+    <span class="page-title-icon bg-gradient-primary text-white mr-2">
+      <i class="mdi mdi-home"></i>
+    </span>
+    Home
+  </h3>
+</div> -->
+
+<!-- stats -->
+<!-- <div class="row">
+  <div class="col-md-2 stretch-card grid-margin">
+    <div class="card bg-gradient-danger card-img-holder text-white">
+      <div class="card-body">
+        <img
+          src="assets/images/dashboard/circle.svg"
+          class="card-img-absolute"
+          alt="circle-image"
+        />
+        <h4 class="font-weight-normal mb-3">
+          MOTOCYCLES
+          <i class="mdi mdi-motorbike mdi-24px float-right"></i>
+        </h4>
+        <h2 class="mb-5">{{ v_moto }}</h2>
+        <h6 class="card-text">Today &nbsp;{{ v_moto_dt }}</h6>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-2 stretch-card grid-margin">
+    <div class="card bg-gradient-info card-img-holder text-white">
+      <div class="card-body">
+        <img
+          src="assets/images/dashboard/circle.svg"
+          class="card-img-absolute"
+          alt="circle-image"
+        />
+        <h4 class="font-weight-normal mb-3">
+          CARS
+          <i class="mdi mdi-car mdi-24px float-right"></i>
+        </h4>
+        <h2 class="mb-5">{{ v_car }}</h2>
+        <h6 class="card-text">Today &nbsp;{{ v_car_dt }}</h6>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-2 stretch-card grid-margin">
+    <div class="card bg-gradient-success card-img-holder text-white">
+      <div class="card-body">
+        <img
+          src="assets/images/dashboard/circle.svg"
+          class="card-img-absolute"
+          alt="circle-image"
+        />
+        <h4 class="font-weight-normal mb-3">
+          MINIBUSES
+          <i class="mdi mdi-car-estate mdi-24px float-right"></i>
+        </h4>
+        <h2 class="mb-5">{{ v_mini }}</h2>
+        <h6 class="card-text">Today &nbsp;{{ v_mini_dt }}</h6>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-2 stretch-card grid-margin">
+    <div class="card bg-gradient-secondary card-img-holder text-white">
+      <div class="card-body">
+        <img
+          src="assets/images/dashboard/circle.svg"
+          class="card-img-absolute"
+          alt="circle-image"
+        />
+        <h4 class="font-weight-normal mb-3">
+          BUSES
+          <i class="mdi mdi-bus mdi-24px float-right"></i>
+        </h4>
+        <h2 class="mb-5">{{ v_bus }}</h2>
+        <h6 class="card-text">Today &nbsp;{{ v_bus_dt }}</h6>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-2 stretch-card grid-margin">
+    <div class="card bg-gradient-primary card-img-holder text-white">
+      <div class="card-body">
+        <img
+          src="assets/images/dashboard/circle.svg"
+          class="card-img-absolute"
+          alt="circle-image"
+        />
+        <h4 class="font-weight-normal mb-3">
+          SHORT TRUCKS
+          <i class="mdi mdi-truck mdi-24px float-right"></i>
+        </h4>
+        <h2 class="mb-5">{{ v_struck }}</h2>
+        <h6 class="card-text">Today &nbsp;{{ v_struck_dt }}</h6>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-2 stretch-card grid-margin">
+    <div class="card bg-gradient-white card-img-holder text-white">
+      <div class="card-body">
+        <img
+          src="assets/images/dashboard/circle.svg"
+          class="card-img-absolute"
+          alt="circle-image"
+        />
+        <h4 class="font-weight-normal mb-3">
+          LONG TRUCKS
+          <i class="mdi mdi-truck-fast mdi-24px float-right"></i>
+        </h4>
+        <h2 class="mb-5">{{ v_ltruck }}</h2>
+        <h6 class="card-text">Today &nbsp;{{ v_ltruck_dt }}</h6>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<!-- map -->
+<!-- <div class="row">
+  <div class="col-lg-12 grid-margin">
+    <div class="card" id="map_canvas_dashboard" style="height: 85vh"></div>
+  </div>
+</div> -->
+
+<!--Leaflet Map-->
+<!-- <div id="map"></div> -->
+<div><img src="assets/images/main.png" /></div>
+
+<!-- table -->
+<!-- <div class="row grid-margin">
+
+  <div class="col-md-12 stretch-card grid-margin">
+    <div class="card">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-sm-4">
+              <h4 class="card-title">Sites ({{ Billboard.length }})</h4>
+            </div>
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4">
+
+            </div>
+          </div>
+          <br />
+          <div>
+            <div *ngFor="let item of Billboard">
+              <div class="d-flex">
+                <div
+                  class="d-flex align-items-center mr-4 text-muted font-weight-light"
+                >
+                  <i class="mdi mdi mdi-map-marker icon-sm mr-2"></i>
+                  <span>{{ item.name }}</span>
+                </div>
+              </div>
+
+              <div class="row mt-3">
+                <div class="col-md-6 pr-1">
+                  <img
+                    style="height: 40vh; object-fit: cover"
+                    src="{{ item.photo_url }}"
+                    class="mb-2 mw-100 w-100 rounded"
+                    alt="image"
+                  />
+                  <br />
+                  <div class="row">
+                    <div class="col-4">
+                      <div
+                        style="text-align: center"
+                        class="align-items-center mr-4 text-muted font-weight-light"
+                      >
+                        <i class="mdi mdi mdi-motorbike icon-sm mr-2"></i>
+                      </div>
+                    </div>
+                    <div class="col-4">
+                      <div
+                        style="text-align: center"
+                        class="align-items-center mr-4 text-muted font-weight-light"
+                      >
+                        <i class="mdi mdi mdi-car icon-sm mr-2"></i>
+                      </div>
+                    </div>
+                    <div class="col-4">
+                      <div
+                        style="text-align: center"
+                        class="align-items-center mr-4 text-muted font-weight-light"
+                      >
+                        <i class="mdi mdi mdi-truck icon-sm mr-2"></i>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-4">
+                      <div
+                        style="text-align: center"
+                        class="align-items-center mr-4 text-muted font-weight-light"
+                      >
+                        <span style="font-size: small">0</span>
+                      </div>
+                    </div>
+                    <div class="col-4">
+                      <div
+                        style="text-align: center"
+                        class="align-items-center mr-4 text-muted font-weight-light"
+                      >
+                        <span style="font-size: small">0</span>
+                      </div>
+                    </div>
+                    <div class="col-4">
+                      <div
+                        style="text-align: center"
+                        class="align-items-center mr-4 text-muted font-weight-light"
+                      >
+                        <span style="font-size: small">0</span>
+                      </div>
+                    </div>
+                  </div>
+                  <br />
+                </div>
+
+                <div class="col-md-6 pl-1">
+                  <div class="table-responsive" style="max-height: max-content">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <td>Dimension</td>
+                          <td>
+                            {{ item.screen_width }} X {{ item.screen_height }}
+                          </td>
+                        </tr>
+                      </thead>
+
+                      <tbody>
+                        <tr>
+                          <td>Orientation</td>
+                          <td>
+                            {{ item.orientation }}
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td>LSM</td>
+                          <td>6 X 9</td>
+                        </tr>
+
+                        <tr>
+                          <td>Rate</td>
+                          <td>R{{ item.rate }} (pm)</td>
+                        </tr>
+
+                        <tr>
+                          <td></td>
+                          <td></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <a
+                  (click)="book_billboard(item)"
+                  style="width: 100%"
+                  class="btn btn-gradient-info ml-auto"
+                  >Book</a
+                >
+                <br />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<!-- <div class="row">
+  <div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Recent news</h4>
+        <div class="d-flex">
+          <div class="d-flex align-items-center text-muted font-weight-light">
+            <i class="mdi mdi-clock icon-sm mr-2"></i>
+            <span>October 3rd, 2022</span>
+          </div>
+        </div>
+
+        <div class="d-flex mt-5 align-items-top">
+          <img
+            src="assets/images/default-imgs/avater-default.png"
+            class="img-sm rounded-circle mr-3"
+            alt="image"
+          />
+          <div class="mb-0 flex-grow">
+            <h5 class="mr-2 mb-2 text-white">
+              Startup's mobile ads deliver R3.5m in extra cash for delivery
+            </h5>
+            <p class="mb-0 text-white">
+              Back in 2019 two young entrepreneurs started a 'moveable
+              billboards' industry in South Africa. The business has boomed
+              during the COVID-19...
+            </p>
+          </div>
+          <div class="ml-auto">
+            <i class="mdi mdi-heart-outline text-muted"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->

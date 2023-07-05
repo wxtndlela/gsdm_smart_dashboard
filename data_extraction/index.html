@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Google Maps Polygon</title>
+    <style>
+      /* Set the height of the map */
+      #map {
+        height: 500px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Create a div to hold the map -->
+    <div id="map"></div>
+
+    <!-- Load the Google Maps JavaScript API -->
+    <script
+      async
+      defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCGw_q9Ig5EsHscrbIaOumAX10bR1k4RhE&libraries=drawing,geometry&callback=initMap"
+    ></script>
+
+    <!-- Define the script to draw the polygon -->
+    <script>
+      function initMap() {
+        // Define the GPS coordinates of the polygon
+        var coords = [
+          { lat: -26.672376967722755, lng: 28.589118064347304 },
+          { lat: -26.67253163132966, lng: 28.589833009186066 },
+          { lat: -26.672742999889465, lng: 28.59085699975077 },
+        ];
+
+        // Create a new map centered on the first coordinate
+        var map = new google.maps.Map(document.getElementById("map"), {
+          center: coords[0],
+          zoom: 15,
+        });
+
+        // Create a new polygon with the specified coordinates
+        var polygon = new google.maps.Polygon({
+          paths: coords,
+          strokeColor: "#FF0000",
+          strokeOpacity: 0.8,
+          strokeWeight: 2,
+          fillColor: "#FF0000",
+          fillOpacity: 0.35,
+        });
+
+        // Add the polygon to the map
+        polygon.setMap(map);
+
+        // Create a new info window
+        var infowindow = new google.maps.InfoWindow({
+          content: "Hello",
+        });
+
+        // Add a click event listener to the polygon
+        polygon.addListener("click", function () {
+          // alert("Clicked");
+          // Set the position of the info window to the clicked location
+          infowindow.setPosition(event.latLng);
+          // Open the info window
+          infowindow.open(map);
+        });
+      }
+    </script>
+  </body>
+</html>

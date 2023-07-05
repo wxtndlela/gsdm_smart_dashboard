@@ -1,0 +1,247 @@
+<!-- header -->
+<div class="page-header">
+  <h3 class="page-title">Areas Of Interest (AOIs) [{{ Billboard.length }}]</h3>
+</div>
+
+<!-- cards -->
+<div class="row">
+  <!-- <div class="col-md-3 stretch-card grid-margin">
+        <div class="card bg-gradient-dark card-img-holder text-white">
+            <div class="card-body ">
+                <i class="mdi mdi-file-document
+                mdi-24px float-left"></i>
+            </div>
+            <div class="card-body ">
+                <h6 class="card-text">Add landlord
+                </h6>
+            </div>
+        </div>
+    </div> -->
+  <div class="col-md-3 stretch-card grid-margin">
+    <div
+      (click)="add_billboard()"
+      class="card bg-gradient-dark card-img-holder text-white"
+    >
+      <div class="card-body">
+        <i class="mdi mdi-account-plus mdi-24px float-left"></i>
+      </div>
+      <div class="card-body">
+        <h6 class="card-text">Add an AREA OF INTEREST (EOI)</h6>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- table -->
+<div class="row grid-margin">
+  <!-- table -->
+  <div class="col-md-6 stretch-card grid-margin">
+    <div class="card">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <!-- <div class="col-sm-4">
+                            <h4 class="card-title">Locations ({{Billboard.length}})</h4>
+                        </div> -->
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4">
+              <a style="width: 100%" class="btn btn-info ml-auto">Export</a>
+            </div>
+          </div>
+          <br />
+          <div style="height: 50vh; overflow-y: scroll; overflow-x: hidden">
+            <div *ngFor="let item of Billboard">
+              <div class="d-flex">
+                <div
+                  class="d-flex align-items-center mr-4 text-muted font-weight-light"
+                >
+                  <i class="mdi mdi mdi-map-marker icon-sm mr-2"></i>
+                  <span>{{ item.name }}</span>
+                </div>
+              </div>
+
+              <div class="row mt-3">
+                <div class="col-md-6 pr-1">
+                  <img
+                    style="height: 20vh; object-fit: cover"
+                    src="{{ item.photo_url }}"
+                    class="mb-2 mw-100 w-100 rounded"
+                    alt="image"
+                  />
+                  <br />
+                  <div class="row">
+                    <div class="col-4">
+                      <div
+                        style="text-align: center"
+                        class="align-items-center mr-4 text-muted font-weight-light"
+                      >
+                        <i class="mdi mdi mdi-motorbike icon-sm mr-2"></i>
+                      </div>
+                    </div>
+                    <div class="col-4">
+                      <div
+                        style="text-align: center"
+                        class="align-items-center mr-4 text-muted font-weight-light"
+                      >
+                        <i class="mdi mdi mdi-car icon-sm mr-2"></i>
+                      </div>
+                    </div>
+                    <div class="col-4">
+                      <div
+                        style="text-align: center"
+                        class="align-items-center mr-4 text-muted font-weight-light"
+                      >
+                        <i class="mdi mdi mdi-truck icon-sm mr-2"></i>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-4">
+                      <div
+                        style="text-align: center"
+                        class="align-items-center mr-4 text-muted font-weight-light"
+                      >
+                        <span style="font-size: small">0</span>
+                      </div>
+                    </div>
+                    <div class="col-4">
+                      <div
+                        style="text-align: center"
+                        class="align-items-center mr-4 text-muted font-weight-light"
+                      >
+                        <span style="font-size: small">0</span>
+                      </div>
+                    </div>
+                    <div class="col-4">
+                      <div
+                        style="text-align: center"
+                        class="align-items-center mr-4 text-muted font-weight-light"
+                      >
+                        <span style="font-size: small">0</span>
+                      </div>
+                    </div>
+                  </div>
+                  <br />
+                </div>
+
+                <div class="col-md-6 pl-1">
+                  <div class="table-responsive" style="max-height: max-content">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <td>Dimension</td>
+                          <td>
+                            {{ item.screen_width }} X {{ item.screen_height }}
+                          </td>
+                        </tr>
+                      </thead>
+
+                      <tbody>
+                        <tr>
+                          <td>Orientation</td>
+                          <td>
+                            {{ item.orientation }}
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td>LSM</td>
+                          <td>6 X 9</td>
+                        </tr>
+
+                        <tr>
+                          <td>Peak Rate</td>
+                          <td>ZAR{{ item.peak_rate }} (P/Hour)</td>
+                        </tr>
+
+                        <tr>
+                          <td>O/Peak Rate</td>
+                          <td>ZAR{{ item.offpeak_rate }} (P/Hour)</td>
+                        </tr>
+
+                        <tr>
+                          <td>Special Rate</td>
+                          <td>ZAR{{ item.special_rate }} (P/Hour)</td>
+                        </tr>
+
+                        <tr>
+                          <td>MDP Type</td>
+                          <td>
+                            {{ item.mdptype }}
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td>MDP Location</td>
+                          <td>
+                            {{ item.mdplocation }}
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td></td>
+                          <td></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <ion-grid>
+                  <ion-row>
+                    <ion-col size="6" (click)="edit_billboard(item)"
+                      ><ion-button size="default" expand="full"
+                        >Edit</ion-button
+                      ></ion-col
+                    >
+                    <ion-col size="6" (click)="presentConfirm(item)"
+                      ><ion-button size="default" expand="full" color="danger"
+                        >Remove</ion-button
+                      ></ion-col
+                    >
+                  </ion-row> </ion-grid
+                >>
+                <br />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- map -->
+  <div class="col-md-6 stretch-card grid-margin">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-4" (click)="change_style('DarkMap')">
+            <img
+              style="height: 50px; object-fit: cover"
+              src="assets/images/maps/dark-map.png"
+              class="mb-2 mw-100 w-100 rounded"
+              alt="image"
+            />
+          </div>
+          <div class="col-4" (click)="change_style('hybrid')">
+            <img
+              style="height: 50px; object-fit: cover"
+              src="assets/images/maps/Satellite-map.png"
+              class="mb-2 mw-100 w-100 rounded"
+              alt="image"
+            />
+          </div>
+          <div class="col-4" (click)="change_style('2DMap')">
+            <img
+              style="height: 50px; object-fit: cover"
+              src="assets/images/maps/2D-Map.png"
+              class="mb-2 mw-100 w-100 rounded"
+              alt="image"
+            />
+          </div>
+        </div>
+        <div style="height: 50vh" id="map_canvas_locations"></div>
+      </div>
+    </div>
+  </div>
+</div>

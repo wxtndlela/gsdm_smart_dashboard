@@ -1,0 +1,152 @@
+<!-- header -->
+<div class="page-header">
+    <h3 class="page-title">
+        Accounts
+    </h3>
+    <nav aria-label="breadcrumb">
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item active" aria-current="page">
+            <span></span>{{active_title}}
+            <i class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
+          </li>
+        </ul>
+      </nav>
+</div>
+
+<!-- cards -->
+<div class="row">
+    <div class="col-md-3 stretch-card grid-margin">
+        <div class="card bg-gradient-dark card-img-holder text-white">
+            <div class="card-body ">
+                <i class="mdi mdi-file-document
+                mdi-24px float-left"></i>
+            </div>
+            <div class="card-body ">
+                <h6 class="card-text">Add proposal
+                </h6>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 stretch-card grid-margin">
+        <div class="card bg-gradient-dark card-img-holder text-white">
+            <div class="card-body ">
+                <i class="mdi mdi-account-plus
+                mdi-24px float-left"></i>
+            </div>
+            <div class="card-body ">
+                <h6 class="card-text">Add customers
+                </h6>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 stretch-card grid-margin">
+        <div class="card bg-gradient-dark card-img-holder text-white">
+            <div class="card-body ">
+                <i class="mdi mdi-deskphone
+                mdi-24px float-left"></i>
+            </div>
+            <div class="card-body ">
+                <h6 class="card-text">Address book
+                </h6>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 stretch-card grid-margin">
+        <div class="card bg-gradient-dark card-img-holder text-white">
+            <div class="card-body ">
+                <i class="mdi mdi-bullhorn
+                mdi-24px float-left"></i>
+            </div>
+            <div class="card-body ">
+                <h6 class="card-text">Send mass communications
+                </h6>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- table -->
+<div class="row">
+
+    <div class="col-3 grid-margin">
+        <div class="card">
+            <div class="card-body">
+                <a style="width: 100%;" class="mb-2 btn btn-info ml-auto" (click)="navigate_view('Transactions')">Transactions</a>
+
+                <a style="width: 100%;" class="mb-2 btn btn-info ml-auto" (click)="navigate_view('Customers')">Customers</a>
+                <a style="width: 100%;" class="mb-2 btn btn-info ml-auto" (click)="navigate_view('Customers Billings')">Customers Billings</a>
+                <a style="width: 100%;" class="mb-2 btn btn-info ml-auto" (click)="navigate_view('Channel Partner')">Channel Partner</a>
+                <a style="width: 100%;" class="mb-2 btn btn-info ml-auto" (click)="navigate_view('Bill Run')">Bill Run</a>
+
+                <a style="width: 100%;" class="mb-2 btn btn-info ml-auto" (click)="navigate_view('Debit order collection')">Debit order collection</a>
+                <a style="width: 100%;" class="mb-2 btn btn-info ml-auto" (click)="navigate_view('Customer reciept')">Customer reciept</a>
+                <a style="width: 100%;" class="mb-2 btn btn-info ml-auto" (click)="navigate_view('Service auto suspension')">Service auto suspension</a>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-9 grid-margin">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <h4 class="card-title">{{active_title}} ({{Transaction.length}})</h4>
+                    </div>
+                    <div class="col-sm-4">
+
+                    </div>
+                    <div class="col-sm-4">
+                        <a (click)="export_as()" style="width: 100%;" class=" btn btn-info ml-auto">Export</a>
+                    </div>
+                </div>
+                <br>
+                <!-- <h4 class="card-title"></h4> -->
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Tx Id
+                                </th>
+                                <th>
+                                    Amount
+                                </th>
+                                <th>
+                                    Currency
+                                </th>
+                                <th>
+                                    date
+                                </th>
+                                <th>
+                                    Balance
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                   
+                            <tr *ngFor="let item of Transaction">
+                                <td>
+                                    {{item.transaction_id}}
+                                </td>
+                                <td>
+                                    {{item.amount}}
+                                </td>
+                                <td>
+                                    {{item.currency}}
+                                </td>
+                                <td>
+                                    {{item.date_created}}
+                                </td>
+                                <td>
+                                    {{item.balance}}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

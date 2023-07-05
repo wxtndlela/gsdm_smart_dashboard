@@ -1,0 +1,292 @@
+<ion-content #cont>
+  <div class="download" *ngIf="downloading == true && isInternetAvailable == true">
+    Please wait while downloading ... {{ percDownload }}&nbsp;%
+  </div>
+  <div
+    class="container-fluid page-body-wrapper"
+    style="min-height: 100%; padding-top: 0%"
+    *ngIf="downloading == false"
+  >
+    <div class="main-panel-only w-100">
+      <div class="page-header">
+        <div class="col-md-6">
+          <h3 class="page-title">Segments Found [{{ _segments.length }}]</h3>
+        </div>
+
+        <!-- <div *ngIf="show_info" class="col-md-6 info">
+          Segment ID:&nbsp;&nbsp;{{ current_roadid }}
+          <div>Address:&nbsp;&nbsp;{{ displayname }}</div>
+        </div> -->
+      </div>
+      <div class="col-md-12" *ngIf="show_list">
+        <div class="input-group">
+          <div class="input-group-prepend bg-transparent">
+            <i class="input-group-text border-0 mdi mdi-magnify"></i>
+          </div>
+          <input
+            type="text"
+            class="form-control border-0"
+            placeholder="Find Link/Segment"
+            [(ngModel)]="searchQuery"
+          />
+        </div>
+
+        <div class="list-group list-group-light space">
+          <a
+            *ngFor="let item of filteredItems"
+            class="list-group-item list-group-item-action px-3 border-0"
+            aria-current="true"
+            (click)="itemClicked(item)"
+          >
+            {{ item.municipality }}&nbsp;&nbsp;|&nbsp;&nbsp;{{
+              item.road_id
+            }}&nbsp;&nbsp;|&nbsp;&nbsp;{{ item.surfacetype }}</a
+          >
+        </div>
+      </div>
+
+      <div class="row">
+        <!--MAP-->
+        <!-- <div
+          *ngIf="showMap && offlinemode == false"
+          class="col-md-12 grid-margin"
+        >
+          <div class="card" id="map_canvas_segments" style="height: 85vh"></div>
+        </div> -->
+        <div *ngIf="showMap" class="iframe-container">
+          <div class="main-iframe">
+            <iframe
+              [src]="mapSrc"
+              allow="microphone; camera; autoplay"
+              allowfullscreen
+            ></iframe>
+          </div>
+        </div>
+
+        <!--SEGEMENT DETAILS-->
+        <div *ngIf="!showMap" class="col-md-12 grid-margin stretch-card">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">Physical Location:</h4>
+              <p class="card-description" *ngIf="roadID">
+                Coordinates :{{ latitude }}, {{ longitude }}
+                <br />
+                Address: <br /><span
+                  style="font-size: 12px; font-style: italic"
+                  >{{ displayname }}</span
+                >
+              </p>
+
+              <p class="card-description" *ngIf="!roadID">
+                Coordinates :--No Link Selected--
+                <br />
+                Address : --No Link Selected--
+              </p>
+
+              <h4 class="card-title">Road / Link ID:</h4>
+              <p class="card-description road-id">
+                <span *ngIf="roadID">{{ roadID }}</span>
+                <span *ngIf="!roadID">--No Link Selected--</span>
+              </p>
+
+              <h4 class="card-title">Street Name:</h4>
+              <p class="card-description">
+                <span *ngIf="streetName">{{ streetName }}</span>
+                <span *ngIf="!streetName">Name Not Found</span><br />
+                <span *ngIf="!roadID">--No Link Selected--</span>
+              </p>
+
+              <h4 class="card-title">Municipality:</h4>
+              <p class="card-description">
+                <span *ngIf="roadID">{{ munic }}</span>
+                <span *ngIf="!roadID">--No Link Selected--</span>
+              </p>
+
+              <h4 class="card-title">VCI:</h4>
+              <p class="card-description">
+                <span *ngIf="roadID">{{ VCI }}</span>
+                <span *ngIf="!roadID">--No Link Selected--</span>
+              </p>
+
+              <h4 class="card-title">Start Length:</h4>
+              <p class="card-description">
+                <span *ngIf="roadID">{{ start_len }}</span>
+                <span *ngIf="!roadID">--No Link Selected--</span>
+              </p>
+
+              <h4 class="card-title">Start KMs:</h4>
+              <p class="card-description">
+                <span *ngIf="roadID">{{ start_km }}</span>
+                <span *ngIf="!roadID">--No Link Selected--</span>
+              </p>
+
+              <h4 class="card-title">End KMs:</h4>
+              <p class="card-description">
+                <span *ngIf="roadID">{{ end_km }}</span>
+                <span *ngIf="!roadID">--No Link Selected--</span>
+              </p>
+
+              <h4 class="card-title">Road Length:</h4>
+              <p class="card-description">
+                <span *ngIf="roadID">{{ road_len }}</span>
+                <span *ngIf="!roadID">--No Link Selected--</span>
+              </p>
+
+              <h4 class="card-title">Route Seq:</h4>
+              <p class="card-description">
+                <span *ngIf="roadID">{{ route_seq }}</span>
+                <span *ngIf="!roadID">--No Link Selected--</span>
+              </p>
+
+              <p *ngIf="roadID" class="card-title">
+                <label for="choose" class="text-color"
+                  >Choose what you want to do</label
+                >
+                <ion-select
+                  class="form-control"
+                  value="select"
+                  (ionChange)="getViewType($event)"
+                  okText="Okay"
+                  cancelText="Dismiss"
+                  id="choose"
+                >
+                  <ion-select-option value="viewmedia"
+                    >Go to Assessment</ion-select-option
+                  >
+                  <ion-select-option
+                    *ngIf="
+                      (global.userRole == 'Administrator' ||
+                        global.userRole == 'Road Inspection')
+                    "
+                    value="uploadmedia"
+                    >Upload Inspection</ion-select-option
+                  >
+                  <!-- <ion-select-option
+                    *ngIf="
+                      (global.userRole == 'Administrator' ||
+                        global.userRole == 'Road Inspection')
+                    "
+                    value="recondevice"
+                    >Record (Device Cam)</ion-select-option
+                  >
+                  <ion-select-option
+                    *ngIf="
+                      (global.userRole == 'Administrator' ||
+                        global.userRole == 'Road Inspection')
+                    "
+                    value="rec3d"
+                    >Record (Front Center Cam)</ion-select-option
+                  > -->
+                </ion-select>
+              </p>
+
+              <div *ngIf="viewType == 'uploadmedia'" class="form-group">
+                <label for="uploadmedia" class="text-color"
+                  >Upload Link Videos/Images</label
+                >
+
+                <ion-select
+                  class="form-control"
+                  value="select"
+                  (ionChange)="getMediaType($event)"
+                  okText="Okay"
+                  cancelText="Dismiss"
+                  id="uploadmedia"
+                >
+                  <ion-select-option value="vid3d">Video(3D)</ion-select-option>
+                  <ion-select-option value="vid"
+                    >Video(Normal)</ion-select-option
+                  >
+                  <ion-select-option value="img">Image</ion-select-option>
+                </ion-select>
+
+                <input
+                  *ngIf="uploadmedia !== '' && !isbusy"
+                  (change)="select_file($event)"
+                  [accept]="opentype"
+                  type="file"
+                  class="form-control"
+                  id="uploadvideo"
+                  placeholder="photo"
+                />
+                <div class="hide" *ngIf="uploadPercent | async as percent">
+                  Uploading: {{ getValue(percent) }}%
+                  <ion-progress-bar [value]="percent"></ion-progress-bar>
+                </div>
+
+                <ion-button *ngIf="isbusy" color="light" expand="block">{{
+                  showpercent
+                }}</ion-button>
+              </div>
+
+              <div *ngIf="viewType == 'viewmedia'">
+                <ion-slides pager="true" [options]="slideOpts">
+                  <ion-slide *ngFor="let item of SegmentMediaArray">
+                    <ion-title class="slide-title">{{
+                      item.media_name
+                    }}</ion-title>
+                    <!-- Add a title for the slide -->
+                    <div
+                      class="slide-content"
+                      (click)="
+                        open_inspection(
+                          item.road_id,
+                          item.id,
+                          item.media_type,
+                          item.media_url
+                        )
+                      "
+                    >
+                      <img
+                        *ngIf="item.media_type == 'vid'"
+                        src="assets/images/vid.jpg"
+                        width="100%"
+                      />
+                      <img
+                        *ngIf="item.media_type == 'vid3d'"
+                        src="assets/images/vid3d.jpg"
+                        width="100%"
+                      />
+                      <img
+                        *ngIf="item.media_type == 'img'"
+                        src="assets/images/img.jpg"
+                        width="100%"
+                      />
+                    </div>
+                  </ion-slide>
+                </ion-slides>
+              </div>
+              <div class="col-md-12">
+                <ion-grid>
+                  <ion-row>
+                    <ion-col>
+                      <ion-button
+                        *ngIf="!isbusy"
+                        expand="block"
+                        (click)="gotoMap(true)"
+                        >Go Back</ion-button
+                      >
+                    </ion-col>
+                    <ion-col *ngIf="isInternetAvailable">
+                      <ion-button
+                        color="warning"
+                        *ngIf="!isbusy"
+                        expand="block"
+                        (click)="gotoDownload()"
+                        >Download Offline Media</ion-button
+                      >
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- main-panel ends -->
+  </div>
+
+  <!-- page-body-wrapper ends -->
+</ion-content>

@@ -1,0 +1,49 @@
+<div class="row">
+  <div class="col-md-3 stretch-card grid-margin">
+    <div
+      (click)="exportexcel()"
+      class="card bg-gradient-dark card-img-holder text-white"
+    >
+      <div class="card-body">
+        <i class="mdi mdi-camera-iris mdi-24px float-left"></i>
+      </div>
+      <div class="card-body">
+        <h6 class="card-text">Export to Excel</h6>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-9 grid-margin">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Intrusions</h4>
+        <div class="table-responsive">
+          <table class="table" id="excel-table">
+            <thead>
+              <tr>
+                <th>Intrusion Type</th>
+                <th>Time of Intrusion</th>
+                <th>Area Affected</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let doc of Intr">
+                <td>
+                  {{ doc.type }}
+                </td>
+                <td>
+                  {{ doc.time }}
+                </td>
+                <td>
+                  <label class="badge badge-gradient-success">TEST DEMO</label>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

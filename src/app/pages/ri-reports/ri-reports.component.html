@@ -1,0 +1,67 @@
+<ion-content #cont>
+  <div
+    class="container-fluid page-body-wrapper"
+    style="min-height: 100%; padding-top: 0%"
+  >
+    <div class="main-panel-only w-100">
+      <div class="page-header">
+        <div *ngIf="show_cond_done" class="col-md-6">
+          <h3 class="page-title">Segments Found [{{ Segments.length }}]</h3>
+        </div>
+        <div *ngIf="show_info" class="col-md-6 info">
+          Segment ID:&nbsp;&nbsp;{{ current_roadid }}
+          <div>Address:&nbsp;&nbsp;{{ displayname }}</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="SURFACE_TYPE">SURFACE TYPE </label>
+        <ion-select
+          (ionChange)="change_st($event)"
+          multiple="true"
+          class="form-control"
+          value="select"
+          okText="Okay"
+          cancelText="Dismiss"
+          id="SURFACE_TYPE"
+        >
+          <ion-select-option value="block">BLOCK</ion-select-option>
+          <ion-select-option value="flexible">FLEXIBLE</ion-select-option>
+          <ion-select-option value="gravel">GRAVEL</ion-select-option>
+        </ion-select>
+      </div>
+
+      <div *ngIf="show_cond" class="form-group">
+        <label for="SURFACE_STATUS">SURFACE CONDITION/STATUS </label>
+        <ion-select
+          (ionChange)="change_sc($event)"
+          class="form-control"
+          multiple="true"
+          value="select"
+          okText="Okay"
+          cancelText="Dismiss"
+          id="SURFACE_STATUS"
+        >
+          <ion-select-option value="notassessed"
+            >NOT ASSESSED</ion-select-option
+          >
+          <ion-select-option value="assessed">ASSESSED</ion-select-option>
+          <ion-select-option value="vpoor">VERY POOR</ion-select-option>
+          <ion-select-option value="poor">POOR</ion-select-option>
+          <ion-select-option value="fair">FAIR</ion-select-option>
+          <ion-select-option value="good">GOOD</ion-select-option>
+          <ion-select-option value="vgood">VERY GOOD</ion-select-option>
+        </ion-select>
+      </div>
+
+      <div class="row">
+        <!--MAP-->
+        <div class="col-md-12 grid-margin">
+          <div class="card" id="map_canvas_segments" style="height: 85vh"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- main-panel ends -->
+  </div>
+  <!-- page-body-wrapper ends -->
+</ion-content>

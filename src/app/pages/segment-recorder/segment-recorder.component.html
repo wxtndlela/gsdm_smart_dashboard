@@ -1,0 +1,75 @@
+<ion-content #cont>
+  <div
+    class="container-fluid page-body-wrapper"
+    style="min-height: 100%; padding-top: 0%"
+  >
+    <div class="main-panel-only w-100">
+      <div class="row">
+        <div
+          *ngIf="rectype == 'recondevice'"
+          class="col-md-12 grid-margin stretch-card"
+        >
+          <div class="video-container">
+            <video #videoEl autoplay></video>
+            <canvas #canvasEl></canvas>
+            <div class="button-container">
+              <ion-button
+                color="danger"
+                *ngIf="!recording"
+                (click)="startRecording()"
+                >Start Recording</ion-button
+              >
+              <ion-button
+                color="warning"
+                *ngIf="recording && !uploading"
+                (click)="stopRecording()"
+                >Stop Recording</ion-button
+              >
+              
+              <div class="hide" *ngIf="uploadPercent | async as percent">
+                Uploading: {{ getValue(percent) }}%
+              </div>
+              <ion-button color="light" *ngIf="uploading">{{
+                showpercent
+              }}</ion-button>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="rectype == 'rec3d'" class="fullscreen-center">
+          <ion-button
+            *ngIf="!recording && !downloading"
+            color="danger"
+            class="button-three-d"
+            (click)="startRecording_3d()"
+            >Start 3D Recording</ion-button
+          >
+          <ion-button
+            *ngIf="recording && !downloading"
+            color="warning"
+            class="button-three-d"
+            (click)="stopRecording_3d()"
+            >Stop 3D Recording</ion-button
+          >
+          <ion-button
+                color="success"
+                *ngIf="!recording && !downloading && is3d"
+                (click)="downloadRecording_3d()"
+                >Start Download</ion-button
+              >
+          <ion-button color="light" *ngIf="uploading">Processing...</ion-button>
+          <ion-button color="light" *ngIf="downloading">Downloading...</ion-button>
+        </div>
+      </div>
+    </div>
+  </div></ion-content
+>
+<ion-fab vertical="bottom" horizontal="center" slot="fixed">
+  <ion-fab-button size="small" color="dark">
+    <ion-icon name="add"></ion-icon>
+  </ion-fab-button>
+  <ion-fab-list side="end">
+    <ion-fab-button>
+      <ion-icon name="close" (click)="dismiss()"></ion-icon>
+    </ion-fab-button>
+  </ion-fab-list>
+</ion-fab>

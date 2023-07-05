@@ -1,0 +1,65 @@
+<ion-content #cont>
+  <div
+    class="container-fluid page-body-wrapper"
+    style="min-height: 100%; padding-top: 0%"
+  >
+    <div class="main-panel-only w-100">
+      <div class="row">
+        <div
+          *ngIf="!isbusy && !vci_state"
+          class="col-md-12 grid-margin stretch-card"
+        >
+          <input type="file" id="fileInput" (change)="update_vci($event)" />
+        </div>
+        <div class="hide" *ngIf="uploadPercent | async as percent">
+          Uploading: {{ getValue(percent) }}%
+          <ion-progress-bar [value]="percent"></ion-progress-bar>
+        </div>
+        <div *ngIf="isbusy" class="col-md-12 grid-margin stretch-card">
+          <ion-button>{{ showpercent }}</ion-button>
+        </div>
+
+        <div class="col-md-12 grid-margin stretch-card">
+          <div class="table-responsive" style="max-height: max-content">
+            <table class="table">
+              <thead>
+                <tr></tr>
+              </thead>
+
+              <tbody>
+                <tr>
+                  <td>VCI File</td>
+                  <td *ngFor="let item of _vci">
+                    <div class="hide">{{ foundVCIState(item.state) }}</div>
+                    <ion-button
+                      *ngIf="!item.processed && !vci_state"
+                      color="danger"
+                      >Awaiting Processing...</ion-button
+                    >
+                    <ion-button
+                      *ngIf="item.processed && !vci_state"
+                      color="success"
+                      >Processed&nbsp;{{
+                        getdate(item.processed_date)
+                      }}</ion-button
+                    >
+                    <ion-button
+                      color="warning"
+                      *ngIf="item.processed && !vci_state"
+                      (click)="downloadFile(item.file_url)"
+                      >Download VCI File</ion-button
+                    >
+
+                    <ion-button color="warning" *ngIf="vci_state">{{
+                      item.state
+                    }}</ion-button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div></ion-content
+>

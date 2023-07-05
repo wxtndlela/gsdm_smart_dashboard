@@ -1,0 +1,150 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "./assets/scss/variables";
+@import "~compass-mixins/lib/compass";
+@import "~compass-mixins/lib/animate";
+@import "~bootstrap/scss/bootstrap";
+@import "./assets/scss/fonts";
+@import "./assets/scss/functions";
+
+/* === Icon fonts === */
+@import "~@mdi/font/scss/materialdesignicons";
+
+/* === Template mixins === */
+@import "./assets/scss/mixins/animation";
+@import "./assets/scss/mixins/badges";
+@import "./assets/scss/mixins/buttons";
+@import "./assets/scss/mixins/misc";
+@import "./assets/scss/mixins/color-functions";
+@import "./assets/scss/mixins/cards";
+@import "./assets/scss/mixins/blockqoute";
+@import "./assets/scss/mixins/popovers";
+@import "./assets/scss/mixins/tooltips";
+
+/* === Core Styles === */
+@import "./assets/scss/background";
+@import "./assets/scss/typography";
+@import "./assets/scss/reset";
+@import "./assets/scss/responsive";
+@import "./assets/scss/misc";
+@import "./assets/scss/utilities";
+@import "./assets/scss/demo";
+@import "./assets/scss/spinner";
+
+/* === Components === */
+@import "./assets/scss/components/forms";
+@import "./assets/scss/components/checkbox-radio";
+@import "./assets/scss/components/icons";
+@import "./assets/scss/components/tables";
+@import "./assets/scss/components/accordions";
+@import "./assets/scss/components/buttons";
+@import "./assets/scss/components/breadcrumbs";
+@import "./assets/scss/components/badges";
+@import "./assets/scss/components/cards";
+@import "./assets/scss/components/preview";
+@import "./assets/scss/components/tooltips";
+@import "./assets/scss/components/popovers";
+@import "./assets/scss/components/lists";
+@import "./assets/scss/components/bootstrap-progress";
+@import "./assets/scss/components/bootstrap-alerts";
+@import "./assets/scss/components/tabs";
+@import "./assets/scss/components/dropdowns";
+@import "./assets/scss/components/date-picker";
+@import "./assets/scss/components/pagination";
+@import "./assets/scss/components/portfolio";
+@import "./assets/scss/components/todo-list";
+
+@import "./assets/scss/components/landing-screens/auth";
+
+/* === Layout === */
+@import "./assets/scss/layout";
+
+ion-content {
+  ::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    background-color: #191c24;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    background-color: #191c24;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    width: 3px;
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background-color: #d62929;
+  }
+
+  -color: dark;
+}
+
+.root {
+}
+
+.modal-md {
+  --border-color: #d62929;
+  --width: 60%;
+  --height: 80%;
+
+  ion-content {
+    --background: #191c24;
+  }
+}
+
+.modal-full {
+  --border-color: #d62929;
+  --width: 100%;
+  --height: 100%;
+
+  ion-content {
+    --background: #191c24;
+  }
+}
+
+.btn-light {
+  color: white;
+  background-color: transparent;
+}
+
+.bg-primary {
+  background-color: #198ae3 !important;
+}
+
+.bg-blur {
+  filter: blur(4px);
+
+  img {
+    height: 200px;
+    // filter: blur(0px);
+  }
+
+  background-size: cover;
+  background-size: 100% 100%;
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 100%;
+}
+
+.gm-style .gm-style-iw-c {
+  padding: 0px;
+  background-color: #191c24 !important;
+  scrollbar-color: red yellow;
+}
+
+.gm-style-iw-tc::after {
+  background-color: #191c24 !important;
+}
+
+.gm-style-iw-d {
+  background-color: #191c24 !important;
+  overflow: hidden !important;
+}

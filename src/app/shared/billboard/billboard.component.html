@@ -1,0 +1,263 @@
+<ion-content class="container-scroller">
+  <div
+    class="container-fluid page-body-wrapper"
+    style="min-height: 100%; padding-top: 0%"
+  >
+    <div class="main-panel-only w-100">
+      <div class="content-wrapper h-100">
+        <div contentAnimate class="h-100">
+          <div class="page-header">
+            <h3 class="page-title">
+              {{ title }}
+            </h3>
+          </div>
+          <div class="row">
+            <!-- <div class="col-md-6 grid-margin stretch-card">
+              <div class="card" id="map_canvas_billboard"></div>
+            </div> -->
+            <div class="col-md-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Physical Location:</h4>
+                  <p class="card-description">
+                    <!-- coordinates :{{ latitude }}, {{ longitude }} -->
+                    <br />
+                    Address : {{ province }}
+                  </p>
+                  <form class="forms-sample" [formGroup]="billboardForm">
+                    <div class="form-group">
+                      <label for="exampleInputUsername1">Name</label>
+                      <input
+                        formControlName="name"
+                        type="text"
+                        class="form-control"
+                        id="exampleInputUsername1"
+                        placeholder="Name"
+                      />
+                    </div>
+                    <div class="row" *ngIf="">
+                      <div class="col">
+                        <div class="form-group">
+                          <label for="mdplocation">Location</label>
+
+                          <ion-select
+                            class="form-control"
+                            [(ngModel)]="mdplocation"
+                            formControlName="mdplocation"
+                            value="select"
+                            okText="Okay"
+                            cancelText="Dismiss"
+                            id="mdplocation"
+                            disabled
+                          >
+                            <ion-select-option value="Physical"
+                              >On-Site</ion-select-option
+                            >
+                            <ion-select-option value="Metaverse"
+                              >Metaverse</ion-select-option
+                            >
+                          </ion-select>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row" *ngIf="">
+                      <div class="col">
+                        <div class="form-group">
+                          <label for="mdplocation">MDP Type</label>
+
+                          <ion-select
+                            class="form-control"
+                            [(ngModel)]="mdptype"
+                            formControlName="mdptype"
+                            value="Intrusion"
+                            okText="Okay"
+                            cancelText="Dismiss"
+                            id="mdptype"
+                            disabled
+                          >
+                            <ion-select-option value="Billboard"
+                              >Billboard</ion-select-option
+                            >
+                            <ion-select-option value="GPS Locked Target AR"
+                              >GPS Locked AR</ion-select-option
+                            >
+                            <ion-select-option value="Wide Area Target AR"
+                              >Wide Area AR</ion-select-option
+                            >
+                            <ion-select-option value="GPS Drop No Target AR"
+                              >GPS Drop AR</ion-select-option
+                            >
+                          </ion-select>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row" *ngIf="">
+                      <div class="col">
+                        <div class="form-group">
+                          <label for="exampleInputEmail1">Height (m)</label>
+                          <input
+                            formControlName="height"
+                            type="number"
+                            class="form-control"
+                            id="exampleInputEmail1"
+                            placeholder="Height"
+                          />
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div class="form-group">
+                          <label for="exampleInputPassword1">Width (m)</label>
+                          <input
+                            formControlName="width"
+                            type="number"
+                            class="form-control"
+                            id="exampleInputPassword1"
+                            placeholder="Width"
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="exampleInputPassword1">Thumbnail Image</label>
+                      <input
+                        (change)="select_file($event)"
+                        accept="image/*"
+                        type="file"
+                        class="form-control"
+                        id="exampleInputPassword1"
+                        placeholder="photo"
+                      />
+                    </div>
+
+                    <div class="form-group" *ngIf="">
+                      <label for="schedule_id">Select Schedule</label>
+                      <ion-select
+                        class="form-control"
+                        [(ngModel)]="schedule_id"
+                        formControlName="schedule_id"
+                        value="select"
+                        okText="Okay"
+                        cancelText="Dismiss"
+                        id="schedule_id"
+                      >
+                        <ion-select-option
+                          *ngFor="let item of Scheds"
+                          [value]="item.id"
+                          >{{ item.name }}</ion-select-option
+                        >
+                      </ion-select>
+                    </div>
+
+                    <div class="form-group" *ngIf="">
+                      <label for="calltoaction">Select Call-To-Action</label>
+                      <ion-select
+                        class="form-control"
+                        [(ngModel)]="calltoaction"
+                        formControlName="calltoaction"
+                        value="select"
+                        okText="Okay"
+                        cancelText="Dismiss"
+                        id="calltoaction"
+                      >
+                        <ion-select-option
+                          *ngFor="let item of CActions"
+                          [value]="item.id"
+                          >{{ item.name }}</ion-select-option
+                        >
+                      </ion-select>
+                    </div>
+
+                    <div class="form-group" *ngIf="">
+                      <label for="peak_rate"
+                        >Peak Rate (Cost per hour in ZAR)</label
+                      >
+                      <input
+                        formControlName="peak_rate"
+                        type="Number"
+                        class="form-control"
+                        id="peak_rate"
+                        placeholder="Peak Rate"
+                      />
+                    </div>
+
+                    <div class="form-group" *ngIf="">
+                      <label for="offpeak_rate"
+                        >Off Peak Rate (Cost per hour in ZAR)</label
+                      >
+                      <input
+                        formControlName="offpeak_rate"
+                        type="Number"
+                        class="form-control"
+                        id="offpeak_rate"
+                        placeholder="Off Peak Rate"
+                      />
+                    </div>
+
+                    <div class="form-group" *ngIf="">
+                      <label for="special_rate"
+                        >Special Rate (Cost per hour in ZAR)</label
+                      >
+                      <input
+                        formControlName="special_rate"
+                        type="Number"
+                        class="form-control"
+                        id="special_rate"
+                        placeholder="Special Rate"
+                      />
+                    </div>
+
+                    <div class="form-group" *ngIf="">
+                      <label for="content_url">Content URL</label>
+                      <ion-select
+                        class="form-control"
+                        [(ngModel)]="content_url"
+                        formControlName="content_url"
+                        value="select"
+                        okText="Okay"
+                        cancelText="Dismiss"
+                        id="content_url"
+                      >
+                        <ion-select-option
+                          *ngFor="let item of Cont"
+                          [value]="item.content_url"
+                          >{{ item.name }}</ion-select-option
+                        >
+                      </ion-select>
+                    </div>
+
+                    <button
+                      *ngIf="!data"
+                      type="submit"
+                      class="btn btn-gradient-info mr-2"
+                      (click)="submit()"
+                    >
+                      Submit
+                    </button>
+                    <button
+                      *ngIf="data"
+                      type="submit"
+                      class="btn btn-gradient-info mr-2"
+                      (click)="update()"
+                    >
+                      Update
+                    </button>
+
+                    <button class="btn btn-light" (click)="dismiss()">
+                      Cancel
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- partial -->
+    </div>
+    <!-- main-panel ends -->
+  </div>
+  <!-- page-body-wrapper ends -->
+</ion-content>
